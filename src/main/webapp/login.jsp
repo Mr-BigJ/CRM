@@ -53,10 +53,10 @@
 				success:function (data){
 					if(data.success){
 						//跳转到欢迎页
-						window.location.href="workbench/index.html"
+						window.location.href="workbench/index.jsp"
 					}else {
 						//登录失败
-						$("#msg").html(data.msg)
+						$("#msg").html("<font color='red'>"+data.msg+"</font>")
 					}
 				}
 			})
@@ -79,7 +79,7 @@
 			<div class="page-header">
 				<h1>登录</h1>
 			</div>
-			<form action="workbench/index.html" class="form-horizontal" role="form"  id="loginForm" >
+			<form action="workbench/index.jsp" class="form-horizontal" role="form" id="loginForm" >
 				<div class="form-group form-group-lg">
 					<div style="width: 350px;">
 						<input class="form-control" type="text" placeholder="用户名" id="loginId" name="loginId">

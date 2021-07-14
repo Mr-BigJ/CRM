@@ -8,7 +8,20 @@
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
-    
+
+
+<!--    过滤器一定要放在servlet前面-->
+<!--    对于url-pattern：
+        通配符前不能加/  通配符主要包含  *  ?
+        -->
+    <filter>
+        <filter-name>EncodingFilter</filter-name>
+        <filter-class>crm.web.filter.EncodingFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>EncodingFilter</filter-name>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>UserController</servlet-name>
         <servlet-class>crm.settings.web.controller.UserController</servlet-class>
