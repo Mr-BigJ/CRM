@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<properties resource="db.properties"/>
+	
+<!--	<typeAliases>-->
+<!--		&lt;!&ndash; <typeAlias type="com.bjpowernode.mybatis.domain.Student" alias="student"/> &ndash;&gt;-->
+<!--		<package name="com.bjpowernode.mybatis.domain"/>-->
+<!--	</typeAliases>-->
+	
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
+			</dataSource>
+		</environment>
+	</environments>
+<!--	用来注册相应的mapper文件-->
+	<mappers>
+<!--		<package name="cjj.my.crm.settings.dao"/>-->
+<!--		<mapper resource="dao/StudentDao.xml" />-->
+		<mapper resource="crm/settings/dao/UserDao.xml" />
+
+
+	</mappers>
+</configuration>
