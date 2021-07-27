@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="crm.workbench.dao.TranDao">
+    <update id="update">
+        update tbl_tran set stage=#{stage},editTime=#{editTime},editBy=#{editBy} where id=#{id}
+    </update>
+
+    <select id="getTranDetail" resultType="Tran">
+        select
+        t.id,
+        u.name as owner,
+        t.money,
+        t.name,
+        t.expectedDate,
+        c.name as customerId,
+        t.stage,
+        t.type,
+        t.source,
+        a.name as activityId,
+        co.fullname as contactsId,
+        t.createBy,
+        t.createTime,
+        t.editBy,
+        t.editTime,
+        t.description,
+        t.contactSummary,
+        t.nextContactTime
+
+        from tbl_tran t
+        join tbl_user u
+        on t.owner=u.id
+        left join tbl_activity a
+        on t.activityId=a.id
+        left join tbl_customer c
+        on t.customerId=c.id
+        left join tbl_contacts co
+        on t.contactsId=co.id
+        where t.id=#{id}
+    </select>
+
+    <select id="getUlist" resultType="User">
+            select id,name from tbl_user
+    </select>
+
+	<insert id="save">
+        insert into tbl_tran (
+        id,
+        owner,
+        money,
+        name,
+        expectedDate,
+        customerId,
+        stage,
+        type,
+        source,
+        activityId,
+        contactsId,
+        createBy,
+        createTime,
+        description,
+        contactSummary,
+        nextContactTime
+
+        )
+        values (
+        #{id},
+        #{owner},
+        #{money},
+        #{name},
+        #{expectedDate},
+        #{customerId},
+        #{stage},
+        #{type},
+        #{source},
+        #{activityId},
+        #{contactsId},
+        #{createBy},
+        #{createTime},
+        #{description},
+        #{contactSummary},
+        #{nextContactTime}
+        )
+    </insert>
+  	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

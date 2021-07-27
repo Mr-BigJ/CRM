@@ -6,10 +6,11 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 
 	<properties resource="db.properties"/>
 	
-<!--	<typeAliases>-->
-<!--		&lt;!&ndash; <typeAlias type="com.bjpowernode.mybatis.domain.Student" alias="student"/> &ndash;&gt;-->
-<!--		<package name="com.bjpowernode.mybatis.domain"/>-->
-<!--	</typeAliases>-->
+	<typeAliases>
+		<!-- <typeAlias type="com.bjpowernode.mybatis.domain.Student" alias="student"/> -->
+		<package name="crm.settings.domain"/>
+		<package name="crm.workbench.domain"/>
+	</typeAliases>
 	
 	<environments default="development">
 		<environment id="development">
@@ -22,12 +23,15 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 			</dataSource>
 		</environment>
 	</environments>
+	
+	
 <!--	用来注册相应的mapper文件-->
 	<mappers>
-<!--		<package name="cjj.my.crm.settings.dao"/>-->
+<!--		批量注册-->
+		<package name="crm.settings.dao"/>
 <!--		<mapper resource="dao/StudentDao.xml" />-->
-		<mapper resource="crm/settings/dao/UserDao.xml" />
-
+		<package name="crm.workbench.dao"/>
+		
 
 	</mappers>
 </configuration>

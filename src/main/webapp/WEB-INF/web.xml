@@ -12,7 +12,7 @@
 
 <!--    过滤器一定要放在servlet前面-->
 <!--    对于url-pattern：
-        通配符前不能加/  通配符主要包含  *  ?
+        通配符加上*.后缀名的方式前不能加/  通配符主要包含  *  ?
         -->
     <filter>
         <filter-name>EncodingFilter</filter-name>
@@ -32,6 +32,12 @@
         <url-pattern>*.jsp</url-pattern>
         <url-pattern>*.do</url-pattern>
     </filter-mapping>
+
+    <listener>
+        <listener-class>crm.listener.SysAppListener</listener-class>
+    </listener>
+
+<!--    登录-->
     <servlet>
         <servlet-name>UserController</servlet-name>
         <servlet-class>crm.settings.web.controller.UserController</servlet-class>
@@ -39,6 +45,61 @@
     <servlet-mapping>
         <servlet-name>UserController</servlet-name>
         <url-pattern>/settings/user/login.do</url-pattern>
+    </servlet-mapping>
+
+<!--    市场活动-->
+    <servlet>
+        <servlet-name>activityController</servlet-name>
+        <servlet-class>crm.workbench.web.controller.activityController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>activityController</servlet-name>
+        <url-pattern>/workbench/activity/selectUserList.do</url-pattern>
+        <url-pattern>/workbench/activity/saveActivity.do</url-pattern>
+        <url-pattern>/workbench/activity/searchActivityList.do</url-pattern>
+        <url-pattern>/workbench/activity/deleteActivity.do</url-pattern>
+        <url-pattern>/workbench/activity/editActivity.do</url-pattern>
+        <url-pattern>/workbench/activity/updateActivity.do</url-pattern>
+        <url-pattern>/workbench/activity/detail.do</url-pattern>
+        <url-pattern>/workbench/activity/remarkList.do</url-pattern>
+        <url-pattern>/workbench/activity/deleteRemark.do</url-pattern>
+        <url-pattern>/workbench/activity/saveRemark.do</url-pattern>
+        <url-pattern>/workbench/activity/reShowRemark.do</url-pattern>
+    </servlet-mapping>
+
+<!--    线索模块-->
+
+    <servlet>
+        <servlet-name>clueController</servlet-name>
+        <servlet-class>crm.workbench.web.controller.clueController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>clueController</servlet-name>
+        <url-pattern>/workbench/clue/selectUserList.do</url-pattern>
+        <url-pattern>/workbench/clue/saveClue.do</url-pattern>
+        <url-pattern>/workbench/clue/clueDetail.do</url-pattern>
+        <url-pattern>/workbench/clue/getActivityByClueId.do</url-pattern>
+        <url-pattern>/workbench/clue/unbund.do</url-pattern>
+        <url-pattern>/workbench/clue/searchUnbundActivity.do</url-pattern>
+        <url-pattern>/workbench/clue/relateA.do</url-pattern>
+        <url-pattern>/workbench/clue/searchActivity.do</url-pattern>
+        <url-pattern>/workbench/clue/switchC.do</url-pattern>
+    </servlet-mapping>
+
+<!--    交易模块-->
+    <servlet>
+        <servlet-name>TranController</servlet-name>
+        <servlet-class>crm.workbench.web.controller.TranController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TranController</servlet-name>
+        <url-pattern>/workbench/transaction/save.do</url-pattern>
+        <url-pattern>/workbench/transaction/getCustomerName.do</url-pattern>
+        <url-pattern>/workbench/transaction/possibility.do</url-pattern>
+        <url-pattern>/workbench/transaction/saveTran.do</url-pattern>
+        <url-pattern>/workbench/transaction/getTranDetail.do</url-pattern>
+        <url-pattern>/workbench/transaction/searchHistory.do</url-pattern>
+        <url-pattern>/workbench/transaction/changeStage.do</url-pattern>
     </servlet-mapping>
 </web-app>
 

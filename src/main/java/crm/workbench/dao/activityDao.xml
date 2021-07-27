@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="crm.workbench.dao.activityDao">
+    <resultMap id="" type="">
+        <id property="" column=""></id>
+        <result column="" property=""></result>
+    </resultMap>
+    <select id="searchActivity" resultType="Activity">
+        select
+        a.id,
+        a.name,
+        u.name as owner,
+        a.startDate,
+        a.endDate
+
+        from tbl_activity a
+        join tbl_user u
+        on a.owner=u.id
+
+        where a.name like '%' #{name} '%'
+    </select>
+
+    <select id="searchUnbundActivity" resultType="Activity">
+        select
+        a.id,
+        a.name,
+        u.name as owner,
+        a.startDate,
+        a.endDate
+
+        from tbl_activity a
+        join tbl_user u
+        on a.owner=u.id
+
+        where a.name like '%' #{name} '%' and a.id not in (
+        select activityId from tbl_clue_activity_relation where clueId=#{clueId}
+        )
+    </select>
+
+    <select id="getActivityByClueId" resultType="Activity">
+        select
+        a.id as aid,
+        car.id,
+        a.name,
+        a.startDate,
+        a.endDate,
+        c.name as owner
+        from tbl_clue_activity_relation car
+        join tbl_activity a
+        on car.activityId=a.id
+        join tbl_user c
+        on c.id=a.owner
+        where car.clueId=#{clueId}
+    </select>
+
+    <update id="updateActivity">
+        update tbl_activity set
+        name=#{name},
+        startDate=#{startDate},
+        endDate=#{endDate},
+        cost=#{cost},
+        description=#{description},
+        editTime=#{editTime},
+        editBy=#{editBy}
+        where id=#{id}
+
+    </update>
+
+    <select id="editActivity" resultType="crm.workbench.domain.Activity">
+        select a.id,u.name as owner,a.name,a.startDate,a.endDate,a.description,a.cost,
+        a.createBy,a.createTime,a.editTime,a.editBy
+        from tbl_activity a join tbl_user u
+        on a.owner=u.id
+        where a.id=#{id}
+    </select>
+
+    <delete id="deleteActivity">
+        delete from tbl_activity
+        where id in
+        <foreach collection="array" open="(" close=")" item="id" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+
+<!--    查询总条数-->
+    <select id="searchTotal" resultType="int">
+        select count(*)
+        from tbl_user u
+        join tbl_activity a
+        on u.id=a.owner
+            <where>
+                <if test="name!=null and name!=''">
+                    a.name like '%' #{name} '%'
+                </if>
+                <if test="owner!=null and owner!=''">
+                    and u.name like '%' #{owner} '%'
+                </if>
+                <if test="startDate!=null and startDate!=''">
+                    and a.startDate &gt;= #{startDate}
+                </if>
+                <if test="endDate!=null and endDate!=''">
+                    and a.endDate &lt;= #{endDate}
+                </if>
+            </where>
+    </select>
+
+
+<!--    查询市场活动信息-->
+    <select id="searchActivityList" resultType="crm.workbench.domain.Activity">
+        select
+            a.id,
+            a.name,
+            u.name as owner,
+            a.startDate,
+            a.endDate
+        from tbl_user u
+        join tbl_activity a
+        on u.id=a.owner
+        <where>
+            <if test="name!=null and name!=''">
+                a.name like '%' #{name} '%'
+            </if>
+            <if test="owner!=null and owner!=''">
+                and u.name like '%' #{owner} '%'
+            </if>
+            <if test="startDate!=null and startDate!=''">
+                and a.startDate &gt; #{startDate}
+            </if>
+            <if test="endDate!=null and endDate!=''">
+                and a.endDate &lt; #{endDate}
+            </if>
+        </where>
+        order by a.createTime desc
+        limit #{filterCount},#{pagesize}
+    </select>
+
+    <select id="selectUserList" resultType="crm.settings.domain.User">
+        select * from tbl_user
+    </select>
+
+    <insert id="saveActivity">
+        insert into tbl_activity (
+        id,
+        owner,
+        name,
+        startDate,
+        endDate,
+        cost,
+        description,
+        createTime,
+        createBy
+        )
+        values (
+        #{id},
+        #{owner},
+        #{name},
+        #{startDate},
+        #{endDate},
+        #{cost},
+        #{description},
+        #{createTime},
+        #{createBy}
+        )
+    </insert>
+
+	
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

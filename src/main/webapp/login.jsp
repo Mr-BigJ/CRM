@@ -14,6 +14,10 @@
 <script type="text/javascript" src="jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 		$(function () {
+		    //如果当前窗口不是顶层窗口，将当前窗口设置成顶层窗口
+		    if(window.top!= window){
+		        window.top.location=window.location
+            }
 			var lid=$("#loginId");
 			lid.focus();
 			//为当前页设置敲键盘事件

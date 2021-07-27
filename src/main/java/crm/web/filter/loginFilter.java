@@ -10,17 +10,22 @@ import java.io.IOException;
 public class loginFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        System.out.println("进入登录过滤");
         HttpServletRequest request=(HttpServletRequest) servletRequest;
         HttpServletResponse response=(HttpServletResponse) servletResponse;
-        User user=(User) request.getSession(false).getAttribute("user");
         String path=request.getServletPath();
+        //不需要拦截的请求
         if("/login.jsp".equals(path) | "/settings/user/login.do".equals(path)){
             filterChain.doFilter(request,response);
-        }
-        if(user != null){
-            request.getRequestDispatcher("workbench/index.jsp").forward(request,response);
+
         }else {
-            response.sendRedirect(request.getContextPath()+"/login.jsp");
+            User user=(User) request.getSession(false).getAttribute("user");
+            if(user != null){
+                filterChain.doFilter(request,response);
+            }else {
+                //request.getContextPath()拿到项目名/crm
+                response.sendRedirect(request.getContextPath()+"/login.jsp");
+            }
         }
     }
 }
